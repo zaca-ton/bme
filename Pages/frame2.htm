@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<body bgcolor="#60b9c6" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" link="#000000" vlink="#000000" alink="#696969">
+
+<br>
+<br>
+
+<center>
+
+<input type="password" id="input" autofocus onKeypress="javascript:if(event.keyCode==13) {input();}">
+
+<button onclick="input()"> 비밀번호 확인 </button>
+
+<!-- 아래부터 자바스크립트 -->
+<script type="text/javascript">
+var pass;
+var len;
+var temp;
+var i;
+
+function input(){
+var input = document.getElementById("input").value;
+temp = input;
+len = temp.length;
+pass = "0x";
+
+for(i = 1; i <= len ; i++ )
+{
+pass = pass + temp.charCodeAt(i-1).toString(16);
+}
+
+pass = parseInt(pass);
+
+if(pass == 134601699256428)
+{
+location.href="data.htm";
+}
+else 
+{
+alert("비밀번호가 맞지 않습니다.");
+}
+
+}
+</script>
+</center>
+
+</body>
+
+</html> 
