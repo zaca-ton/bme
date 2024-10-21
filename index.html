@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=https://fe3f-175-198-121-147.ngrok-free.app">
     <title>매뉴얼 저장소 바로가기</title>
     <style>
         body {
@@ -39,11 +38,40 @@
             background-color: #45a049;
         }
     </style>
+<script>
+        fetch('https://fe3f-175-198-121-147.ngrok-free.app', {
+            headers: {
+                'ngrok-skip-browser-warning': 'true'
+            }
+        })
+        .then(() => {
+            window.location.href = 'https://fe3f-175-198-121-147.ngrok-free.app';
+        })
+        .catch(error => {
+            console.error('Redirection failed:', error);
+        });
+
+       function redirectToNgrok(event) {
+            event.preventDefault(); // 기본 링크 동작을 막음
+            fetch('https://fe3f-175-198-121-147.ngrok-free.app', {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'
+                }
+            })
+            .then(() => {
+                window.location.href = 'https://fe3f-175-198-121-147.ngrok-free.app';
+            })
+            .catch(error => {
+                console.error('Redirection failed:', error);
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>매뉴얼 저장소로 이동</h1>
-        <p>페이지가 자동으로 이동하지 않으면<a href="https://fe3f-175-198-121-147.ngrok-free.app">여기를 클릭하세요.</a></p>
+        <p>페이지가 자동으로 이동하지 않으면</p>
+        <p><a href="#" onclick="redirectToNgrok(event)">여기를 클릭하세요.</a></p>
     </div>
 </body>
 </html>
