@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors'); // CORS 모듈 가져오기
 
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const proxy = require('http-proxy-middleware');  // 구버전
 
 const app = express();
 const PORT = 3000;
@@ -20,28 +20,27 @@ app.use(cors()); // 모든 도메인에서 요청을 허용
 app.use(express.json());
 
 // 프록시 미들웨어 설정
-app.use('/public', createProxyMiddleware({
-  target: `${repoUrl}`, // REPO_URL로 요청 전달
+app.use('/public', proxy({
+  target: `${repoUrl}`,
   changeOrigin: true,
   pathRewrite: {
-    '^/public': '/public', // 경로 재작성
+    '^/public': '/public',
   }
 }));
 
-app.use('/uploads', createProxyMiddleware({
-  target: `${repoUrl}`, // REPO_URL로 요청 전달
+app.use('/uploads', proxy({
+  target: `${repoUrl}`,
   changeOrigin: true,
   pathRewrite: {
-    '^/uploads': '/uploads', // 경로 재작성
+    '^/uploads': '/uploads',
   }
 }));
 
-// posts.json 파일 요청을 REPO_URL로 프록시 설정
-app.use('/data/posts.json', createProxyMiddleware({
-  target: `${repoUrl}`, // REPO_URL로 요청 전달
+app.use('/data/posts.json', proxy({
+  target: `${repoUrl}`,
   changeOrigin: true,
   pathRewrite: {
-    '^/data/posts.json': '/data/posts.json', // 경로 재작성
+    '^/data/posts.json': '/data/posts.json',
   }
 }));
 
