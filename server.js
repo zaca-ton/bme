@@ -46,7 +46,7 @@ const loadPostsFromFile = (res) => {
                     postIdCounter = posts[posts.length - 1].id + 1; // 마지막 게시물 ID에 +1
                 }
                 // 클라이언트에 게시물 목록 전송
-                res.json(posts);
+                res?.json(posts);
             } catch (parseError) {
                 console.error('Error parsing JSON data:', parseError);
             }
