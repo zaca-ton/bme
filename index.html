@@ -3,86 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>매뉴얼 저장소</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <title>매뉴얼 저장소 바로가기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
+<script>
+        fetch('https://divine-cougar-vastly.ngrok-free.app', {
+            headers: {
+                'ngrok-skip-browser-warning': 'true'
+            }
+        })
+        .then(() => {
+            window.location.href = 'https://divine-cougar-vastly.ngrok-free.app';
+        })
+        .catch(error => {
+            console.error('Redirection failed:', error);
+        });
+
+       function redirectToNgrok(event) {
+            event.preventDefault(); // 기본 링크 동작을 막음
+            fetch('https://divine-cougar-vastly.ngrok-free.app', {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'
+                }
+            })
+            .then(() => {
+                window.location.href = 'https://divine-cougar-vastly.ngrok-free.app';
+            })
+            .catch(error => {
+                console.error('Redirection failed:', error);
+            });
+        }
+    </script>
 </head>
 <body>
-    <a href="/" style="text-decoration: none; color: inherit;">
-    <h1>매뉴얼 저장소(Manual Archive)</h1>
-    </a>
-
-    <div id="searchContainer">
-        <div id="postCount">총 게시물 수: 0</div>
-        <div>
-            <select id="searchField">
-                <option value="all">전체</option> <!-- 전체 옵션 추가 -->
-                <option value="equipmentName">장비명</option>
-                <option value="manufacturer">제조사</option>
-                <option value="modelName">모델명</option>
-                <option value="content">내용</option>
-                <option value="pdfFile">첨부파일</option>
-            </select>
-            <input type="text" id="searchTerm" placeholder="검색어 입력" onkeypress="if(event.key === 'Enter') searchPosts()">
-            <button onclick="searchPosts()">검색</button>
-        </div>
+    <div class="container">
+        <h1>매뉴얼 저장소로 이동</h1>
+        <p>페이지가 자동으로 이동하지 않으면</p>
+        <p><a href="#" onclick="redirectToNgrok(event)">여기를 클릭하세요.</a></p>
     </div>
-
-    <table id="postsTable">
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th>장비명</th>
-                <th>제조사</th>
-                <th>모델명</th>
-                <th>내용</th>
-                <th>첨부파일</th>
-                <th>수정</th>
-                <th>삭제</th>
-            </tr>
-        </thead>
-        <tbody id="postsTableBody">
-            <tr>
-                <td colspan="8">게시물이 없습니다.</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="pagination" id="pagination"></div>
-
-    <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-        <button onclick="openPostForm()">매뉴얼 등록</button>
-    </div>
-
-    <div id="postForm" style="display:none;">
-        <h2>매뉴얼 등록</h2>
-        <input type="text" id="equipmentName" placeholder="장비명" required>
-        <input type="text" id="manufacturer" placeholder="제조사" required>
-        <input type="text" id="modelName" placeholder="모델명" required>
-        <input type="text" id="content" placeholder="내용" required>
-        <input type="file" id="pdfFile" accept=".pdf" required>
-        <button onclick="onCreateButtonClick()">등록</button>
-        <button onclick="closePostForm()">취소</button>
-    </div>
-
-<!-- 비밀번호 입력 모달 창 HTML -->
-<div id="passwordModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border:1px solid #888; z-index:1000;">
-    <h2>관리자 인증</h2>
-    <input type="password" id="passwordInput" placeholder="관리자 비밀번호 입력" style="margin-bottom: 10px;">
-    <br>
-    <button id="confirmButton">확인</button>
-    <button onclick="closePasswordModal()">취소</button>
-</div>
-    <script src="./js/security.js"></script>
-    <script src="./js/post_read.js"></script>
-    <script src="./js/post_action.js"></script>
-    <script src="./js/pagination.js"></script>
-    <script>
-        let currentPage = 1;
-        let actionType = ''; // 수정 또는 삭제 액션 구분을 위한 변수
-        let currentPostId = null; // 현재 처리 중인 게시물 ID
-        let currentRow  = null;
-        loadPosts(); // 초기 로드
-    </script>
-
 </body>
 </html>
