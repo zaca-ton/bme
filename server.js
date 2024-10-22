@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors'); // CORS 모듈 가져오기
 
-const proxy = require('http-proxy-middleware');  // 구버전
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 const PORT = 3000;
@@ -18,31 +18,38 @@ const repoUrl = process.env.REPO_URL;
 // Middleware
 app.use(cors()); // 모든 도메인에서 요청을 허용
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public'))); // 정적 파일 제공
+app.use('/uploads', express.static('uploads')); // 업로드된 파일 제공
 
 // 프록시 미들웨어 설정
-app.use('/public', proxy({
-  target: `${repoUrl}`,
+app.use('/public', createProxyMiddleware({
+  target: `${repoUrl}`, // REPO_URL로 요청 전달
   changeOrigin: true,
   pathRewrite: {
-    '^/public': '/public',
+    '^/public': '/public', // 경로 재작성
   }
 }));
 
-app.use('/uploads', proxy({
-  target: `${repoUrl}`,
+app.use('/uploads', createProxyMiddleware({
+  target: `${repoUrl}`, // REPO_URL로 요청 전달
   changeOrigin: true,
   pathRewrite: {
-    '^/uploads': '/uploads',
+    '^/uploads': '/uploads', // 경로 재작성
   }
 }));
 
-app.use('/data/posts.json', proxy({
-  target: `${repoUrl}`,
+// posts.json 파일 요청을 REPO_URL로 프록시 설정
+app.use('/data/posts.json', createProxyMiddleware({
+  target: `${repoUrl}`, // REPO_URL로 요청 전달
   changeOrigin: true,
   pathRewrite: {
-    '^/data/posts.json': '/data/posts.json',
+    '^/data/posts.json': '/data/posts.json', // 경로 재작성
   }
 }));
+
+
+// posts.json 파일 경로
+const postsFilePath = path.join(__dirname, 'data', 'posts.json');
 
 // Multer 설정
 const storage = multer.diskStorage({
