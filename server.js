@@ -18,8 +18,6 @@ const repoUrl = process.env.REPO_URL;
 // Middleware
 app.use(cors()); // 모든 도메인에서 요청을 허용
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public'))); // 정적 파일 제공
-app.use('/uploads', express.static('uploads')); // 업로드된 파일 제공
 
 // 프록시 미들웨어 설정
 app.use('/public', createProxyMiddleware({
@@ -46,10 +44,6 @@ app.use('/data/posts.json', createProxyMiddleware({
     '^/data/posts.json': '/data/posts.json', // 경로 재작성
   }
 }));
-
-
-// posts.json 파일 경로
-const postsFilePath = path.join(__dirname, 'data', 'posts.json');
 
 // Multer 설정
 const storage = multer.diskStorage({
