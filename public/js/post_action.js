@@ -86,6 +86,12 @@ function onDeleteButtonClick(postId) {
     openPasswordModal();
 }
 
+// 등록 버튼 클릭 시
+function onCreateButtonClick() {
+    actionType = 'create'; // 등록 액션
+    openPasswordModal();
+}
+
 // 매뉴얼 등록 메뉴
 function openPostForm() {
     document.getElementById('postForm').style.display = 'block';
