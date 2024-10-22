@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
                       enableEdit(currentPostId, window.currentRow);
                   } else if (actionType === 'delete') {
                       deletePost(currentPostId);
+                  } else if (actionType === 'create') {
+                      createPost();
                   }
               } else {
                   alert('비밀번호가 일치하지 않습니다.');
