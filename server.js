@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const multer = require('multer');
 const bcrypt = require('bcrypt');
@@ -5,14 +7,46 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors'); // CORS 모듈 가져오기
 
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
 const app = express();
 const PORT = 3000;
+
+// 환경 변수 사용
+const repoUrl = process.env.REPO_URL;
 
 // Middleware
 app.use(cors()); // 모든 도메인에서 요청을 허용
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public'))); // 정적 파일 제공
 app.use('/uploads', express.static('uploads')); // 업로드된 파일 제공
+
+// 프록시 미들웨어 설정
+app.use('/public', createProxyMiddleware({
+  target: `${repoUrl}`, // REPO_URL로 요청 전달
+  changeOrigin: true,
+  pathRewrite: {
+    '^/public': '/public', // 경로 재작성
+  }
+}));
+
+app.use('/uploads', createProxyMiddleware({
+  target: `${repoUrl}`, // REPO_URL로 요청 전달
+  changeOrigin: true,
+  pathRewrite: {
+    '^/uploads': '/uploads', // 경로 재작성
+  }
+}));
+
+// posts.json 파일 요청을 REPO_URL로 프록시 설정
+app.use('/data/posts.json', createProxyMiddleware({
+  target: `${repoUrl}`, // REPO_URL로 요청 전달
+  changeOrigin: true,
+  pathRewrite: {
+    '^/data/posts.json': '/data/posts.json', // 경로 재작성
+  }
+}));
+
 
 // posts.json 파일 경로
 const postsFilePath = path.join(__dirname, 'data', 'posts.json');
@@ -32,6 +66,7 @@ const upload = multer({ storage: storage });
 
 // 데이터 저장용 배열
 let posts = [];
+
 let postIdCounter = 1; // 게시물 ID 카운터
 
 // 서버 시작 시 기존 posts.json 파일에서 데이터를 불러오기
