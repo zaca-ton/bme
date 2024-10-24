@@ -39,36 +39,32 @@
         }
     </style>
 <script>
-    fetch('https://divine-cougar-vastly.ngrok-free.app', {
-        headers: {
-            'ngrok-skip-browser-warning': 'true'
-        }
-    })
-    .then(response => response.text())
-    .then(html => {
-        // HTML 콘텐츠를 현재 페이지에 업데이트
-        document.body.innerHTML = html; // 필요에 따라 특정 요소만 업데이트할 수 있습니다.
-    })
-    .catch(error => {
-        console.error('Redirection failed:', error);
-    });
+        fetch('https://divine-cougar-vastly.ngrok-free.app', {
+            headers: {
+                'ngrok-skip-browser-warning': 'true'
+            }
+        })
+        .then(() => {
+            window.location.href = 'https://divine-cougar-vastly.ngrok-free.app';
+        })
+        .catch(error => {
+            console.error('Redirection failed:', error);
+        });
 
-function redirectToNgrok(event) {
-    event.preventDefault(); // 기본 링크 동작을 막음
-    fetch('https://divine-cougar-vastly.ngrok-free.app', {
-        headers: {
-            'ngrok-skip-browser-warning': 'true'
+       function redirectToNgrok(event) {
+            event.preventDefault(); // 기본 링크 동작을 막음
+            fetch('https://divine-cougar-vastly.ngrok-free.app', {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'
+                }
+            })
+            .then(() => {
+                window.location.href = 'https://divine-cougar-vastly.ngrok-free.app';
+            })
+            .catch(error => {
+                console.error('Redirection failed:', error);
+            });
         }
-    })
-    .then(response => response.text())
-    .then(html => {
-        // HTML 콘텐츠를 현재 페이지에 업데이트
-        document.body.innerHTML = html; // 필요에 따라 특정 요소만 업데이트할 수 있습니다.
-    })
-    .catch(error => {
-        console.error('Redirection failed:', error);
-    });
-}
     </script>
 </head>
 <body>
